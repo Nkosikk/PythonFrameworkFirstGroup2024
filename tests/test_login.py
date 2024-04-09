@@ -6,6 +6,7 @@ from utils.readProperties import ReadConfig
 
 
 class Test_001_LoginToSauceDemo:
+
     BaseUrl = ReadConfig().getBaseURL()
     Username = ReadConfig().getUsername()
     Password = ReadConfig().getPassword()
