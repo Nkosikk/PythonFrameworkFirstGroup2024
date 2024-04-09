@@ -21,3 +21,12 @@ def setup(browser):
         print("Edge Browser launched successfully")
 
     return driver
+
+
+def pytest_addoption(parser):
+    parser.addoption("--browser")
+
+
+@pytest.fixture()
+def browser(request):
+    return request.config.getoption("--browser")

@@ -10,7 +10,7 @@ class test_001_LoginToSauceDemo:
     Username = ReadConfig().getUsername()
     Password = ReadConfig().getPassword()
 
-    @pytest.mark.Regression
+    @pytest.mark.regression
     @allure.severity(allure.severity_level.CRITICAL)
     def test_loginTests(self, setup):
         self.driver = setup
