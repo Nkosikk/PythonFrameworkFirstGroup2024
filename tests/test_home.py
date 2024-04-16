@@ -8,15 +8,15 @@ from pageObjects.loginPage import LoginPage
 from utils.readProperties import ReadConfig
 
 
-class Test_001_LoginToSauceDemo:
+class Test_002_LoginToSauceDemo:
     BaseUrl = ReadConfig().getBaseURL()
     Username = ReadConfig().getUsername()
     Password = ReadConfig().getPassword()
 
     @pytest.mark.nkosi
-    @pytest.mark.loginSuccess
+    @pytest.mark.AddItem
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_1_VerifyloginSuccessTests(self, setup):
+    def test_1_AddItemToCartTests(self, setup):
         self.driver = setup
         self.driver.get(self.BaseUrl)  # This line is passing the url of the system in test
         self.driver.maximize_window()
@@ -37,33 +37,10 @@ class Test_001_LoginToSauceDemo:
             print("Login Failed")
             allure.attach(self.driver.get_screenshot_as_png(), name="Login Failed", attachment_type=AttachmentType.PNG)
             assert False
+        self.hp.clickAddToCartSauceBackLabButton()
+        self.driver.find_element(By.XPATH, self.hp.button_AddedToCart_xpath).is_displayed()
+        allure.attach(self.driver.get_screenshot_as_png(), name="Item Added to cart", attachment_type=AttachmentType.PNG)
+
+
 
         self.driver.quit()
-
-    @pytest.mark.nkosi
-    @pytest.mark.loginUncessuss
-    @allure.severity(allure.severity_level.CRITICAL)
-    def test_2_VerifyErrorMessageIsReturnedWhenYouLoginWithInvalidDetailsTests(self, setup):
-        self.driver = setup
-        self.driver.get(self.BaseUrl)
-        self.driver.maximize_window()
-        self.lp = LoginPage(self.driver)
-        self.hp = HomePage(self.driver)
-        self.lp.enterUsername(self.Username+"Nkosi")
-        self.lp.enterPassword(self.Password)
-        allure.attach(self.driver.get_screenshot_as_png(), name="Login Page", attachment_type=AttachmentType.PNG)
-        self.lp.clickLoginButton()
-
-        loginError = self.driver.find_element(By.XPATH,self.lp.label_loginError_xpath).text
-
-        if loginError == "Epic sadface: Username and password do not match any user in this service":
-            allure.attach(self.driver.get_screenshot_as_png(), name="Invalid Login", attachment_type=AttachmentType.PNG)
-            print("Invalid login validation passed")
-            assert True
-        else:
-            print("Invalid login validation failed")
-            allure.attach(self.driver.get_screenshot_as_png(), name="Login Error validation failed", attachment_type=AttachmentType.PNG)
-            assert False
-
-        self.driver.quit()
-

@@ -5,12 +5,14 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class HomePage:
     label_product_xpath = "//span[@class='title'][contains(.,'Products')]"
+    button_addToCartSauceBackLab_id = "add-to-cart-sauce-labs-backpack"
+    button_AddedToCart_xpath = "//span[@class='shopping_cart_badge'][contains(.,'1')]"
 
 
     def __init__(self, driver):
         self.driver = driver
 
-    # def enterUsername(self, username):
-    #     wait = WebDriverWait(self.driver, 10)
-    #     element = wait.until(EC.element_to_be_clickable((By.ID, self.textbox_username_id)))
-    #     element.send_keys(username)
+    def clickAddToCartSauceBackLabButton(self):
+        wait = WebDriverWait(self.driver, 10)
+        element = wait.until(EC.element_to_be_clickable((By.ID, self.button_addToCartSauceBackLab_id)))
+        element.click()
