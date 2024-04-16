@@ -14,7 +14,8 @@ class Test_001_LoginToSauceDemo:
     Password = ReadConfig().getPassword()
 
     @pytest.mark.nkosi
-    @allure.severity(allure.severity_level.BLOCKER)
+    @pytest.mark.loginSuccess
+    @allure.severity(allure.severity_level.CRITICAL)
     def test_VerifyloginSuccessTests(self, setup):
         self.driver = setup
         self.driver.get(self.BaseUrl)
@@ -38,3 +39,31 @@ class Test_001_LoginToSauceDemo:
             assert False
 
         self.driver.quit()
+
+    @pytest.mark.nkosi
+    @pytest.mark.loginUncessuss
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_VerifyErrorMessageIsReturnedWhenYouLoginWithInvalidDetailsTests(self, setup):
+        self.driver = setup
+        self.driver.get(self.BaseUrl)
+        self.driver.maximize_window()
+        self.lp = LoginPage(self.driver)
+        self.hp = HomePage(self.driver)
+        self.lp.enterUsername(self.Username+"Nkosi")
+        self.lp.enterPassword(self.Password)
+        allure.attach(self.driver.get_screenshot_as_png(), name="Login Page", attachment_type=AttachmentType.PNG)
+        self.lp.clickLoginButton()
+
+        loginError = self.driver.find_element(By.XPATH,self.lp.label_loginError_xpath).text
+
+        if loginError == "Epic sadface: Username and password do not match any user in this service":
+            allure.attach(self.driver.get_screenshot_as_png(), name="Invalid Login", attachment_type=AttachmentType.PNG)
+            print("Invalid login validation passed")
+            assert True
+        else:
+            print("Invalid login validation failed")
+            allure.attach(self.driver.get_screenshot_as_png(), name="Login Error validation failed", attachment_type=AttachmentType.PNG)
+            assert False
+
+        self.driver.quit()
+
