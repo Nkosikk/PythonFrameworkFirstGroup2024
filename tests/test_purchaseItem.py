@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 
 from pageObjects.homePage import HomePage
 from pageObjects.loginPage import LoginPage
+from pageObjects.yourCartPage import YourCartPage
 from utils.readProperties import ReadConfig
 
 
@@ -13,7 +14,7 @@ class Test_003_LoginToSauceDemo:
     Username = ReadConfig().getUsername()
     Password = ReadConfig().getPassword()
 
-    @pytest.mark.nkosi
+    @pytest.mark.Kevin
     @allure.severity(allure.severity_level.CRITICAL)
     def test_purchaseItemTests(self, setup):
         self.driver = setup
@@ -21,12 +22,13 @@ class Test_003_LoginToSauceDemo:
         self.driver.maximize_window()
         self.lp = LoginPage(self.driver)
         self.hp = HomePage(self.driver)
+        self.ycp = YourCartPage(self.driver)
         self.lp.enterUsername(self.Username)
         self.lp.enterPassword(self.Password)
         allure.attach(self.driver.get_screenshot_as_png(), name="Login Page", attachment_type=AttachmentType.PNG)
         self.lp.clickLoginButton()
 
-        productText = self.driver.find_element(By.XPATH,self.hp.label_product_xpath).text
+        productText = self.driver.find_element(By.XPATH, self.hp.label_product_xpath).text
 
         if productText == "Products":
             print("Login Success")
@@ -38,8 +40,13 @@ class Test_003_LoginToSauceDemo:
             assert False
         self.hp.clickAddToCartSauceBackLabButton()
         self.driver.find_element(By.XPATH, self.hp.button_AddedToCart_xpath).is_displayed()
-        allure.attach(self.driver.get_screenshot_as_png(), name="Item Added to cart", attachment_type=AttachmentType.PNG)
+        allure.attach(self.driver.get_screenshot_as_png(), name="Item Added to cart",
+                      attachment_type=AttachmentType.PNG)
 
+        self.hp.clickShoppingCartButton()
 
+        self.driver.find_element(By.XPATH, self.ycp.label_YourCart_xpath).is_displayed()
+
+        allure.attach(self.driver.get_screenshot_as_png(), name="Your Cart", attachment_type=AttachmentType.PNG)
 
         self.driver.quit()
