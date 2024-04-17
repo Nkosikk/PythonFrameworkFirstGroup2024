@@ -8,9 +8,6 @@ class HomePage:
     button_addToCartSauceBackLab_id = "add-to-cart-sauce-labs-backpack"
     button_AddedToCart_xpath = "//span[@class='shopping_cart_badge'][contains(.,'1')]"
 
-
-
-
     def __init__(self, driver):
         self.driver = driver
 
@@ -20,6 +17,6 @@ class HomePage:
         element.click()
 
     def clickShoppingCartButton(self):
-            wait = WebDriverWait(self.driver, 10)
-            element = wait.until(EC.element_to_be_clickable((By.XPATH, self.button_AddedToCart_xpath)))
-            element.click()
+        wait = WebDriverWait(self.driver, 10)
+        element = wait.until(EC.element_to_be_clickable((By.XPATH, self.button_AddedToCart_xpath)))
+        element.click()

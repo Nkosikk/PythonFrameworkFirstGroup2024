@@ -8,7 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 def setup(browser):
     if browser.lower() or browser.upper() == 'chrome':
         chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument('--headless')  # Run in headless mode
+        chrome_options.add_argument('--headless')  # Run in headless mode
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
         print("Chrome Browser launched successfully")
 
