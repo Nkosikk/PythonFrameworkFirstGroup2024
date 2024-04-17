@@ -4,31 +4,37 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class CheckoutInformationPage:
-    textbox_firstname_id = "first-name"
-    textbox_lastname_id = "last-name"
-    textbox_zipcode_id = "postal-code"
-    button_continue_id = "continue"
-    label_checkoutInformationPage_xpath = "//span[@class='title'][contains(.,'Checkout: Your Information')]"
+    checkoutYourInformation_xpath = "//span[@class='title'][contains(.,'Checkout: Your Information')]"
+    firstNameField_id = "first-name"
+    lastNameField_id = "last-name"
+    postalCodeField_id = "postal-code"
+    continueButton_id = "continue"
 
     def __init__(self, driver):
         self.driver = driver
 
-    def enterFirstName(self, Fullname):
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.element_to_be_clickable((By.ID, self.textbox_firstname_id)))
-        element.send_keys("first-name")
+    def verifyCheckoutYourInformationPage(self):
+        WebDriverWait(self.driver, 30).until(
+            EC.visibility_of_element_located((By.XPATH, self.checkoutYourInformation_xpath)))
+        checkoutText = self.driver.find_element(By.XPATH, self.checkoutYourInformation_xpath).text
+        assert checkoutText == "Checkout: Your Information"
 
-    def enterLastName(self, Surname):
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.element_to_be_clickable((By.ID, self.textbox_lastname_id)))
-        element.send_keys("last-name")
+    def enterFirstName(self, fullname):
+        wait = WebDriverWait(self.driver, 30)
+        element = wait.until(EC.element_to_be_clickable((By.ID, self.firstNameField_id)))
+        element.send_keys("Zamantuli")
 
-    def enterZipCode(self, Zipcode):
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.element_to_be_clickable((By.ID, self.textbox_zipcode_id)))
-        element.send_keys("postal-code")
+    def enterLastName(self, surname):
+        wait = WebDriverWait(self.driver, 30)
+        element = wait.until(EC.element_to_be_clickable((By.ID, self.lastNameField_id)))
+        element.send_keys("Ntuli")
+
+    def enterPostalCode(self, zipcode):
+        wait = WebDriverWait(self.driver, 30)
+        element = wait.until(EC.element_to_be_clickable((By.ID, self.postalCodeField_id)))
+        element.send_keys("1939")
 
     def clickContinueButton(self):
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.element_to_be_clickable((By.ID, self.button_continue_id)))
+        wait = WebDriverWait(self.driver, 30)
+        element = wait.until(EC.element_to_be_clickable((By.ID, self.continueButton_id)))
         element.click()
