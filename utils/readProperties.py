@@ -22,7 +22,7 @@ class ReadConfig():
         return Password
 
     @staticmethod
-    def getFullNameL():
+    def getFullName():
         FullName = config.get('User Information', 'FullName')
         return FullName
 
