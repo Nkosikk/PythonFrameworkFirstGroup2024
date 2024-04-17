@@ -8,7 +8,7 @@ class CheckoutInformationPage:
     firstNameField_id = "first-name"
     lastNameField_id = "last-name"
     postalCodeField_id = "postal-code"
-    continueButton_id = "Continue"
+    continueButton_id = "continue"
 
     def __init__(self, driver):
         self.driver = driver
