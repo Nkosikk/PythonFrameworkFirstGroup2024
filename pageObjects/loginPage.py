@@ -7,6 +7,7 @@ class LoginPage:
     textbox_username_id = "user-name"
     textbox_password_id = "password"
     button_login_id = "login-button"
+    label_loginError_xpath = "//h3[@data-test='error'][contains(.,'Epic sadface: Username and password do not match any user in this service')]"
 
     def __init__(self, driver):
         self.driver = driver
