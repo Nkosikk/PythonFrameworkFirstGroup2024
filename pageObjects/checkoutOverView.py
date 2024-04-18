@@ -22,9 +22,9 @@ class CheckoutOverview:
         print(itemTotal)
 
         # Calculate Item Total plus Tax
-        ItemTotalPlusTax=itemTotal+(itemTotal*0.08)
+        FullItemTotalPlusTax=itemTotal+(itemTotal*0.08)
+        ItemTotalPlusTax=round(FullItemTotalPlusTax,2)
         print(ItemTotalPlusTax)
-
 
         # Resolve Total
         element2 = wait.until(EC.element_to_be_clickable((By.XPATH, self.label_Total_xpath))).text
@@ -33,9 +33,22 @@ class CheckoutOverview:
         print(Total)
 
         if ItemTotalPlusTax == Total:
+            # put screenshot
+            #put the code to click finish
+            # put the code to verify that your order was placed
+            # CLick BAck Home
+            # Click burger menu
+            # Click Logout
+            # Take screenshot where u see neccessary
             assert True
         else:
+            # put screenshot
+            # put the code to click cancel
+            # Click burger menu
+            # Click Logout
+            # Take screenshot where u see neccessary
             assert False
+
 
 
 
