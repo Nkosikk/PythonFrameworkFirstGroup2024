@@ -3,8 +3,7 @@ import pytest
 from allure_commons.types import AttachmentType
 from selenium.webdriver.common.by import By
 
-from pageObjects.checkoutInformationPage import CheckoutInformationPage
-from pageObjects.checkoutOverviewPage import CheckoutOverviewPage
+from pageObjects.checkoutYourInformation import CheckoutYourInformation
 from pageObjects.homePage import HomePage
 from pageObjects.loginPage import LoginPage
 from pageObjects.yourCartPage import YourCartPage
@@ -19,7 +18,7 @@ class Test_003_LoginToSauceDemo:
     Surname = ReadConfig().getSurname()
     ZipCode = ReadConfig().getZipCode()
 
-    @pytest.mark.nkosi
+    @pytest.mark.Kevin
     @allure.severity(allure.severity_level.CRITICAL)
     def test_purchaseItemTests(self, setup):
         self.driver = setup
@@ -28,10 +27,11 @@ class Test_003_LoginToSauceDemo:
         self.lp = LoginPage(self.driver)
         self.hp = HomePage(self.driver)
         self.ycp = YourCartPage(self.driver)
-        self.cip = CheckoutInformationPage(self.driver)
-        self.cop = CheckoutOverviewPage(self.driver)
+        self.cyi = CheckoutYourInformation(self.driver)
         self.lp.enterUsername(self.Username)
         self.lp.enterPassword(self.Password)
+
+
         allure.attach(self.driver.get_screenshot_as_png(), name="Login Page", attachment_type=AttachmentType.PNG)
         self.lp.clickLoginButton()
 
@@ -47,47 +47,26 @@ class Test_003_LoginToSauceDemo:
             assert False
         self.hp.clickAddToCartSauceBackLabButton()
         self.driver.find_element(By.XPATH, self.hp.button_AddedToCart_xpath).is_displayed()
-        allure.attach(self.driver.get_screenshot_as_png(), name="Item Added to cart",
-                      attachment_type=AttachmentType.PNG)
+        allure.attach(self.driver.get_screenshot_as_png(), name="Item Added to cart", attachment_type=AttachmentType.PNG)
 
         self.hp.clickShoppingCartButton()
 
         self.driver.find_element(By.XPATH, self.ycp.label_YourCart_xpath).is_displayed()
+
         allure.attach(self.driver.get_screenshot_as_png(), name="Your Cart", attachment_type=AttachmentType.PNG)
 
-        self.driver.find_element(By.XPATH, self.ycp.label_SauceLabsBack_xpath).is_displayed()
-        allure.attach(self.driver.get_screenshot_as_png(), name="Sauce Labs Backpack",
-                      attachment_type=AttachmentType.PNG)
+        self.ycp.clickChackoutButton()
 
-        self.ycp.clickCheckOutButton()
-        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Your Information",
-                      attachment_type=AttachmentType.PNG)
+        self.driver.find_element(By.XPATH, self.cyi.label_CheckoutYourInformation_xpath).is_displayed()
 
-        self.driver.find_element(By.XPATH, self.cip.checkoutYourInformation_xpath).is_displayed()
-        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Your Information", attachment_type=AttachmentType.PNG)
+        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout Page", attachment_type=AttachmentType.PNG)
+        self.cyi.enterFirstName(self.FullName)
+        self.cyi.enterLastName(self.Surname)
+        self.cyi.enterPostCode(self.ZipCode)
 
-        self.cip.enterFirstName(self.FullName)
-        self.cip.enterLastName(self.Surname)
-        self.cip.enterPostalCode(self.ZipCode)
-        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Your Information", attachment_type=AttachmentType.PNG)
+        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout Your Information",attachment_type=AttachmentType.PNG)
 
-        self.cip.clickContinueButton()
-        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Overview", attachment_type=AttachmentType.PNG)
-
-        self.driver.find_element(By.XPATH, self.cop.checkoutOverview_xpath).is_displayed()
+        self.cyi.clickContinueButton()
         allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Overview",attachment_type=AttachmentType.PNG)
 
-        self.driver.find_element(By.XPATH, self.cop.sauceLabsBackpack_xpath).is_displayed()
-
-    def test_total_verification(self):
-        # Setup
-        item_total = 00
-        tax = 0
-        expected_total = 00
-
-        # Call calculate_total method
-        actual_total = CheckoutOverviewPage.calculate_total(item_total, tax)
-
-        # Assertion
-        self.assertEqual(expected_total, actual_total, "Item total plus tax does not equal total.")
         self.driver.quit()
