@@ -29,6 +29,7 @@ class Test_003_LoginToSauceDemo:
         self.hp = HomePage(self.driver)
         self.ycp = YourCartPage(self.driver)
         self.cip = CheckoutInformationPage(self.driver)
+        self.cop = CheckoutOverviewPage(self.driver)
         self.lp.enterUsername(self.Username)
         self.lp.enterPassword(self.Password)
         allure.attach(self.driver.get_screenshot_as_png(), name="Login Page", attachment_type=AttachmentType.PNG)
@@ -73,11 +74,10 @@ class Test_003_LoginToSauceDemo:
         self.cip.clickContinueButton()
         allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Overview", attachment_type=AttachmentType.PNG)
 
-        self.driver.find_element(By.XPATH, self.checkoutOverviewPage.checkoutOverview_xpath).is_displayed()
-        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Overview",
-                      attachment_type=AttachmentType.PNG)
+        self.driver.find_element(By.XPATH, self.cop.checkoutOverview_xpath).is_displayed()
+        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Overview",attachment_type=AttachmentType.PNG)
 
-        self.driver.find_element(By.XPATH, self.checkoutOverviewPage.sauceLabsBackpack_xpath).is_displayed()
+        self.driver.find_element(By.XPATH, self.cop.sauceLabsBackpack_xpath).is_displayed()
 
     def test_total_verification(self):
         # Setup
