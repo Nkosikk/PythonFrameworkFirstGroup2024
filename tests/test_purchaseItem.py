@@ -3,6 +3,7 @@ import pytest
 from allure_commons.types import AttachmentType
 from selenium.webdriver.common.by import By
 
+from pageObjects.checkoutOverView import CheckoutOverview
 from pageObjects.checkoutYourInformation import CheckoutYourInformation
 from pageObjects.homePage import HomePage
 from pageObjects.loginPage import LoginPage
@@ -28,6 +29,7 @@ class Test_003_LoginToSauceDemo:
         self.hp = HomePage(self.driver)
         self.ycp = YourCartPage(self.driver)
         self.cyi = CheckoutYourInformation(self.driver)
+        self.cov = CheckoutOverview(self.driver)
         self.lp.enterUsername(self.Username)
         self.lp.enterPassword(self.Password)
 
@@ -68,5 +70,10 @@ class Test_003_LoginToSauceDemo:
 
         self.cyi.clickContinueButton()
         allure.attach(self.driver.get_screenshot_as_png(), name="Checkout: Overview",attachment_type=AttachmentType.PNG)
+        self.cov.verifyItemTotalPlusTaxEqualsTotal()
+
+
+
+
 
         self.driver.quit()
