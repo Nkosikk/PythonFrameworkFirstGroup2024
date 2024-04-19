@@ -27,7 +27,7 @@ class Test_002_LoginToSauceDemo:
         allure.attach(self.driver.get_screenshot_as_png(), name="Login Page", attachment_type=AttachmentType.PNG)
         self.lp.clickLoginButton()
 
-        productText = self.driver.find_element(By.XPATH,self.hp.label_product_xpath).text
+        productText = self.driver.find_element(By.XPATH,self.hp.product_xpath).text
 
         if productText == "Products":
             print("Login Success")
@@ -37,10 +37,9 @@ class Test_002_LoginToSauceDemo:
             print("Login Failed")
             allure.attach(self.driver.get_screenshot_as_png(), name="Login Failed", attachment_type=AttachmentType.PNG)
             assert False
-        self.hp.clickAddToCartSauceBackLabButton()
-        self.driver.find_element(By.XPATH, self.hp.button_AddedToCart_xpath).is_displayed()
+
+        self.hp.clickAddToCartButton()
+
+        self.driver.find_element(By.XPATH, self.hp.clickShoppingCartButton()).is_displayed()
         allure.attach(self.driver.get_screenshot_as_png(), name="Item Added to cart", attachment_type=AttachmentType.PNG)
-
-
-
         self.driver.quit()

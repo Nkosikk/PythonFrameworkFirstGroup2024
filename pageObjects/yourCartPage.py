@@ -4,14 +4,14 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class YourCartPage:
-    label_YourCart_xpath = "//span[@class='title'][contains(.,'Your Cart')]"
-    label_SauceLabsBack_xpath = "//div[@class='inventory_item_name'][contains(.,'Sauce Labs Backpack')]"
-    button_checkout_id = "checkout"
+    yourCart_xpath = "//span[@class='title'][contains(.,'Your Cart')]"
+    sauceLabsBack_xpath = "//div[contains(@class,'cart_item_label')]"
+    checkout_xpath = "//button[contains(.,'Checkout')]"
 
     def __init__(self, driver):
         self.driver = driver
 
     def clickCheckOutButton(self):
         wait = WebDriverWait(self.driver, 30)
-        element = wait.until(EC.element_to_be_clickable((By.ID, self.button_checkout_id)))
+        element = wait.until(EC.element_to_be_clickable((By.XPATH, self.checkout_xpath)))
         element.click()

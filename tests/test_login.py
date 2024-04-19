@@ -16,7 +16,7 @@ class Test_001_LoginToSauceDemo:
     @pytest.mark.nkosi
     @pytest.mark.loginSuccess
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_1_VerifyloginSuccessTests(self, setup):
+    def test_1_VerifyLoginSuccessTests(self, setup):
         self.driver = setup
         self.driver.get(self.BaseUrl)  # This line is passing the url of the system in test
         self.driver.maximize_window()
@@ -27,7 +27,7 @@ class Test_001_LoginToSauceDemo:
         allure.attach(self.driver.get_screenshot_as_png(), name="Login Page", attachment_type=AttachmentType.PNG)
         self.lp.clickLoginButton()
 
-        productText = self.driver.find_element(By.XPATH,self.hp.label_product_xpath).text
+        productText = self.driver.find_element(By.XPATH,self.hp.product_xpath).text
 
         if productText == "Products":
             print("Login Success")
