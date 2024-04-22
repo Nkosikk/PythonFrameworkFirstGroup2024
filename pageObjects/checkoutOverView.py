@@ -34,6 +34,7 @@ class CheckoutOverview:
 
         if ItemTotalPlusTax == Total:
             # put screenshot
+            #allure.attach(self.driver.get_screenshot_as_png(), name="Item Added to cart",attachment_type=AttachmentType.PNG)
             #put the code to click finish
             # put the code to verify that your order was placed
             # CLick BAck Home
