@@ -8,31 +8,31 @@ class CheckoutInformationPage:
     firstNameField_xpath = "//input[contains(@id,'first-name')]"
     lastNameField_xpath = "//input[contains(@id,'last-name')]"
     postalCodeField_xpath = "//input[contains(@id,'postal-code')]"
-    continueButton_xpath = "//input[contains(@id,'continue')]"
+    cancelButton_xpath = "//button[@data-test='cancel']"
+    continueButton_xpath = "//input[contains(@type,'submit')]"
 
     def __init__(self, driver):
         self.driver = driver
 
-    # def verifyCheckoutYourInformationPage(self):
-    #     WebDriverWait(self.driver, 30).until(
-    #         EC.visibility_of_element_located((By.XPATH, self.checkoutYourInformation_xpath)))
-    #     checkoutText = self.driver.find_element(By.XPATH, self.checkoutYourInformation_xpath).text
-    #     assert checkoutText == "Checkout: Your Information"
-
     def enterFirstName(self, firstname):
         wait = WebDriverWait(self.driver, 10)
         element = wait.until(EC.element_to_be_clickable((By.XPATH, self.firstNameField_xpath)))
-        element.send_keys("firstname")
+        element.send_keys(firstname)
 
     def enterLastName(self, lastname):
         wait = WebDriverWait(self.driver, 10)
         element = wait.until(EC.element_to_be_clickable((By.XPATH, self.lastNameField_xpath)))
-        element.send_keys("lastname")
+        element.send_keys(lastname)
 
-    def enterPostalCode(self, postcode):
+    def enterPostalCode(self, zipcode):
         wait = WebDriverWait(self.driver, 10)
         element = wait.until(EC.element_to_be_clickable((By.XPATH, self.postalCodeField_xpath)))
-        element.send_keys("postcode")
+        element.send_keys(zipcode)
+
+    def clickCancelButton(self):
+        wait = WebDriverWait(self.driver, 10)
+        element = wait.until(EC.element_to_be_clickable((By.XPATH, self.cancelButton_xpath)))
+        element.click()
 
     def clickContinueButton(self):
         wait = WebDriverWait(self.driver, 10)

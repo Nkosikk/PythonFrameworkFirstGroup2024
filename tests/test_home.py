@@ -3,8 +3,8 @@ import pytest
 from allure_commons.types import AttachmentType
 from selenium.webdriver.common.by import By
 
-from pageObjects.homePage import HomePage
-from pageObjects.loginPage import LoginPage
+from pageObjects.home import HomePage
+from pageObjects.login import LoginPage
 from utils.readProperties import ReadConfig
 
 
@@ -20,14 +20,14 @@ class Test_002_LoginToSauceDemo:
         self.driver = setup
         self.driver.get(self.BaseUrl)  # This line is passing the url of the system in test
         self.driver.maximize_window()
-        self.lp = LoginPage(self.driver)
-        self.hp = HomePage(self.driver)
-        self.lp.enterUsername(self.Username)
-        self.lp.enterPassword(self.Password)
+        self.loginPage = LoginPage(self.driver)
+        self.homePage = HomePage(self.driver)
+        self.loginPage.enterUsername(self.Username)
+        self.loginPage.enterPassword(self.Password)
         allure.attach(self.driver.get_screenshot_as_png(), name="Login Page", attachment_type=AttachmentType.PNG)
-        self.lp.clickLoginButton()
+        self.loginPage.clickLoginButton()
 
-        productText = self.driver.find_element(By.XPATH,self.hp.product_xpath).text
+        productText = self.driver.find_element(By.XPATH,self.homePage.product_xpath).text
 
         if productText == "Products":
             print("Login Success")
@@ -37,9 +37,7 @@ class Test_002_LoginToSauceDemo:
             print("Login Failed")
             allure.attach(self.driver.get_screenshot_as_png(), name="Login Failed", attachment_type=AttachmentType.PNG)
             assert False
-
-        self.hp.clickAddToCartButton()
-
-        self.driver.find_element(By.XPATH, self.hp.clickShoppingCartButton()).is_displayed()
+        self.homePage.clickAddToCartButton()
+        self.driver.find_element(By.XPATH, self.homePage.AddedToCart_xpath).is_displayed()
         allure.attach(self.driver.get_screenshot_as_png(), name="Item Added to cart", attachment_type=AttachmentType.PNG)
         self.driver.quit()
