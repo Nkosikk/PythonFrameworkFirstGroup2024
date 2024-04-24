@@ -1,1 +1,1 @@
-pytest -s -v -m"Kevin" --alluredir="allure-results" --browser chrome
+pytest -s -v -m"nkosi" --alluredir="allure-results" --browser chrome

@@ -19,7 +19,7 @@ class Test_003_LoginToSauceDemo:
     Surname = ReadConfig().getSurname()
     ZipCode = ReadConfig().getZipCode()
 
-    @pytest.mark.Kevin
+    @pytest.mark.nkosi
     @allure.severity(allure.severity_level.CRITICAL)
     def test_purchaseItemTests(self, setup):
         self.driver = setup
